@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# AlgoVision 3D
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Visualize Algorithms in a Whole New Dimension.**
 
-Currently, two official plugins are available:
+AlgoVision is a modern, interactive, and aesthetically pleasing 3D algorithm visualizer built with **React**, **Three.js (React Three Fiber)**, and **Tailwind CSS**. It is designed to help students, developers, and enthusiasts understand sorting algorithms through immersive visualizations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![AlgoVision Preview](public/preview.png)
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   **Start-of-the-Art 3D Visualization**: Watch algorithms sort 3D bars in real-time.
+-   **Dual View Modes**: Switch seamlessly between **3D Perspective** and **2D Flat View**.
+-   **Interactive Controls**: Play, Pause, Reset, Step Through, and adjust Speed dynamically.
+-   **Comprehensive Learning**: Each algorithm comes with:
+    -   **Code Walkthrough**: Highlights the exact line of code executing in real-time.
+    -   **Time & Space Complexity**: Big-O notation analysis.
+    -   **Interview Cheat Sheets**: Key takeaways, stability, and use-cases for technical interviews.
+-   **Multiple Algorithms**:
+    -   Bubble Sort
+    -   Quick Sort
+    -   Merge Sort
+    -   Insertion Sort
+    -   Selection Sort
+    -   Heap Sort
+-   **Responsive & Premium UI**: Glassmorphism design with smooth animations.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-   **Frontend Framework**: React (Vite)
+-   **3D Graphics**: Three.js, React Three Fiber, Drei
+-   **State Management**: Zustand
+-   **Styling**: Tailwind CSS
+-   **Routing**: React Router DOM (v6)
+-   **Icons**: Lucide React
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+-   Node.js (v18+ recommended)
+-   npm or pnpm
+
+### Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/kartikeykumar09/algo-vision.git
+    cd algo-vision
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server:**
+
+    ```bash
+    npm run dev
+    ```
+
+    Open your browser and navigate to `http://localhost:5173`.
+
+### Building for Production
+
+To build the project for deployment:
+
+```bash
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🤝 Contributing
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Contributions are welcome! If you'd like to add more algorithms (Graph, Pathfinding, etc.) or improve the existing ones:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/NewAlgo`).
+3.  Commit your changes.
+4.  Push to the branch.
+5.  Open a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Built with ❤️ by [Kartikey Kumar](https://github.com/kartikeykumar09)
