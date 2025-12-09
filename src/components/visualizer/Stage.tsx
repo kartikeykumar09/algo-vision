@@ -25,11 +25,11 @@ const CameraController = () => {
             
             // "Pseudo-2D" using flat perspective
             // Move camera far back and reduce FOV to flatten the image
-            camera.position.set(0, 5, 40)
-            camera.lookAt(0, 5, 0)
+            camera.position.set(0, 0, 40)
+            camera.lookAt(0, 0, 0)
             
             // Adjust orbit target to center of visualization
-            orbitRef.current.target.set(0, 5, 0)
+            orbitRef.current.target.set(0, 0, 0)
         } else {
             orbitRef.current.enableRotate = true
             
