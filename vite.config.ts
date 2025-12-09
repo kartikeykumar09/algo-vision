@@ -4,6 +4,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/tools/algo-vision/',
   plugins: [react()],
   resolve: {
     alias: {

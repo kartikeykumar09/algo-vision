@@ -56,12 +56,13 @@ interface AlgoState {
     incrementOperations: () => void
     setCurrentLine: (line: number | null) => void
     addLog: (message: string) => void
+    setSpeed: (speed: number) => void
 }
 
 export const useAlgoStore = create<AlgoState>((set) => ({
     // Initial State
     view: 'dashboard',
-    viewMode: '3d',
+    viewMode: '2d',
     currentAlgorithm: null,
 
     array: [],
@@ -84,6 +85,7 @@ export const useAlgoStore = create<AlgoState>((set) => ({
     // Actions
     setView: (view) => set({ view }),
     setViewMode: (mode) => set({ viewMode: mode }),
+    setSpeed: (speed) => set({ speed }), // Added setSpeed
     selectAlgorithm: (algo) => set({
         currentAlgorithm: algo,
         view: algo ? 'visualizer' : 'dashboard' // Auto switch

@@ -1,12 +1,11 @@
 import { ArrowRight, Lock, Sparkles } from "lucide-react"
-import { ALGOS, type Algorithm } from "../data/algorithms"
+import { ALGOS } from "../data/algorithms"
 import { cn } from "@/lib/utils"
+import { Link } from "react-router-dom"
 
-interface DashboardProps {
-  onSelect: (algo: Algorithm) => void
-}
+// interface DashboardProps {}
 
-export const Dashboard = ({ onSelect }: DashboardProps) => {
+export const Dashboard = () => {
   return (
     <div className="flex-1 overflow-y-auto bg-gradient-to-b from-[#020617] to-[#0f172a] p-8 pb-32">
       <div className="max-w-7xl mx-auto space-y-12">
@@ -41,15 +40,14 @@ export const Dashboard = ({ onSelect }: DashboardProps) => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.algorithms.map((algo) => (
-                  <button
+                  <Link
+                    to={algo.status === 'ready' ? `/${algo.id}` : '#'}
                     key={algo.id}
-                    onClick={() => algo.status === 'ready' && onSelect(algo)}
-                    disabled={algo.status !== 'ready'}
                     className={cn(
                       "group relative flex flex-col p-6 rounded-2xl border transition-all duration-300 text-left overflow-hidden",
                       algo.status === 'ready' 
                         ? "bg-card/40 hover:bg-card/60 border-white/5 hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] cursor-pointer" 
-                        : "bg-card/20 border-white/5 opacity-60 cursor-not-allowed"
+                        : "bg-card/20 border-white/5 opacity-60 cursor-not-allowed pointer-events-none"
                     )}
                   >
                     {/* Hover Gradient Background */}
@@ -82,7 +80,7 @@ export const Dashboard = ({ onSelect }: DashboardProps) => {
                         Coming Soon
                       </div>
                     )}
-                  </button>
+                  </Link>
                 ))}
               </div>
             </section>
