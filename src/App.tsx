@@ -7,6 +7,9 @@ import { MergeSort } from '@/components/visualizer/sorting/MergeSort'
 import { InsertionSort } from '@/components/visualizer/sorting/InsertionSort'
 import { SelectionSort } from '@/components/visualizer/sorting/SelectionSort'
 import { HeapSort } from '@/components/visualizer/sorting/HeapSort'
+import { BST } from '@/components/visualizer/trees/BST'
+import { AVLTree } from '@/components/visualizer/trees/AVLTree'
+import { TreeTraversals } from '@/components/visualizer/trees/TreeTraversals'
 
 
 import { useAlgoStore } from '@/store/useAlgoStore'
@@ -20,7 +23,7 @@ import { ALGOS } from '@/data/algorithms'
 
 // Internal component for handling Tabs
 // This keeps the App logic clean and solves the state management for tabs
-const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine, targetValue }: { currentAlgorithm: any, isPlaying: boolean, logs: string[], currentLine: number | null, targetValue: number | null }) => {
+const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine, targetValue, customDescription }: { currentAlgorithm: any, isPlaying: boolean, logs: string[], currentLine: number | null, targetValue: number | null, customDescription: string | null }) => {
     const [activeTab, setActiveTab] = useState<'Overview' | 'Learn' | 'Logs'>('Overview')
 
     return (
@@ -71,10 +74,16 @@ const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine, targetV
                             <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-cyan-500/10 to-transparent blur-xl pointer-events-none" />
                             <div className="text-[10px] text-cyan-400/80 mb-1 uppercase tracking-widest font-bold">Current Goal</div>
                             <div className="text-sm text-foreground font-medium flex items-center gap-2">
-                                {currentAlgorithm.id.includes('sort') ? (
+                                {customDescription ? (
+                                    <span className="text-cyan-100">{customDescription}</span>
+                                ) : currentAlgorithm.id.includes('sort') ? (
                                     <span>Sort array in <span className="text-cyan-400">ascending order</span></span>
-                                ) : (
+                                ) : currentAlgorithm.id.includes('search') ? (
                                     <span>Find index of value <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-mono text-xs border border-cyan-500/30 ml-1">{targetValue ?? '?'}</span></span>
+                                ) : currentAlgorithm.id === 'traversals' ? (
+                                    <span>Traverse tree nodes <span className="text-cyan-400">In-Order</span></span>
+                                ) : (
+                                    <span>Search or Insert <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-mono text-xs border border-cyan-500/30 ml-1">{targetValue ?? '?'}</span></span>
                                 )}
                             </div>
                         </div>
@@ -157,7 +166,76 @@ while (low <= high) {
   buildMaxHeap(arr);
   for (i = n-1; i > 0; i--) {
     swap(arr[0], arr[i]);
-    heapify(arr, i, 0);
+    heapify(arr, 0, i);
+  }
+}`}
+            {currentAlgorithm.id === 'bst' &&
+`insert(node, val) {
+  if (node == null) return newNode(val);
+  
+  if (val < node.val)
+    node.left = insert(node.left, val);
+  else if (val > node.val)
+    node.right = insert(node.right, val);
+    
+  return node;
+}
+
+// Search
+search(node, val) {
+  if (node == null || node.val == val) 
+    return node;
+  if (val < node.val)
+    return search(node.left, val);
+  return search(node.right, val);
+}`}
+            {currentAlgorithm.id === 'avl' &&
+`insert(node, key) {
+  if (!node) return newNode(key);
+  
+  if (key < node.key)
+    node.left = insert(node.left, key);
+  else if (key > node.key)
+    node.right = insert(node.right, key);
+  else return node;
+  
+  node.height = 1 + max(h(node.left), h(node.right));
+  int balance = getBalance(node);
+  
+  // Rotations
+  if (balance > 1 && key < node.left.key)
+    return rightRotate(node);
+  if (balance < -1 && key > node.right.key)
+    return leftRotate(node);
+  // ... (LR and RL cases)
+  
+  return node;
+}`}
+            {currentAlgorithm.id === 'traversals' &&
+`inOrder(node) {
+  if (node == null) return;
+  inOrder(node.left);
+  visit(node);
+  inOrder(node.right);
+}
+
+preOrder(node) {
+  visit(node);
+  preOrder(node.left);
+  preOrder(node.right);
+}
+
+postOrder(node) {
+  postOrder(node.left);
+  postOrder(node.right);
+  visit(node);
+}`}
+            {currentAlgorithm.id === 'heap-sort' &&
+`heapSort(arr) {
+  buildMaxHeap(arr);
+  for (i = n-1; i > 0; i--) {
+    swap(arr[0], arr[i]);
+    heapify(arr, 0, i);
   }
 }`}
         </pre>
@@ -270,7 +348,8 @@ const AlgoVisualizer = () => {
         logs,
         speed,
         setSpeed,
-        targetValue
+        targetValue,
+        customDescription
     } = useAlgoStore()
 
     // Sync URL with Store
@@ -385,6 +464,7 @@ const AlgoVisualizer = () => {
                  logs={logs}
                  currentLine={currentLine}
                  targetValue={targetValue}
+                 customDescription={customDescription}
               />
             </div>
           </aside>
@@ -445,6 +525,9 @@ const AlgoVisualizer = () => {
                 {currentAlgorithm?.id === 'insertion-sort' && <InsertionSort />}
                 {currentAlgorithm?.id === 'selection-sort' && <SelectionSort />}
                 {currentAlgorithm?.id === 'heap-sort' && <HeapSort />}
+                {currentAlgorithm?.id === 'bst' && <BST />}
+                {currentAlgorithm?.id === 'avl' && <AVLTree />}
+                {currentAlgorithm?.id === 'traversals' && <TreeTraversals />}
              </Stage>
           </main>
       </div>
