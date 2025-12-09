@@ -1,12 +1,14 @@
+
 import { create } from 'zustand'
 import type { Algorithm } from '@/data/algorithms'
 
-// Simple ID generator if uuid is too heavy/not installed
-const generateId = () => Math.random().toString(36).substr(2, 9)
+// Helper for random IDs
+export const generateId = () => Math.random().toString(36).substr(2, 9)
 
-export interface ArrayItem {
+export type ArrayItem = {
     id: string
     value: number
+    color?: string
 }
 
 interface AlgoState {
@@ -43,6 +45,18 @@ interface AlgoState {
     setTargetValue: (val: number | null) => void
     setFoundIndex: (index: number | null) => void
 
+    // Tree State
+    treeNodes: TreeNode[]
+    treeEdges: TreeEdge[]
+    rootId: string | null
+    setTree: (nodes: TreeNode[], edges: TreeEdge[], rootId: string | null) => void
+    resetTree: () => void
+
+    // Shared
+    generationId: number
+    setCustomDescription: (desc: string | null) => void
+    customDescription: string | null
+
     // Actions
     setView: (view: 'dashboard' | 'visualizer') => void
     setViewMode: (mode: '2d' | '3d') => void
@@ -65,6 +79,26 @@ interface AlgoState {
     setSpeed: (speed: number) => void
 }
 
+export type TreeNode = {
+    id: string
+    value: number
+    x: number
+    y: number
+    z: number // For 3D but we might stick to 2D plane in 3D
+    color?: string
+    // Binary Tree specific helpers (not strictly state, but helpful)
+    leftId?: string | null
+    rightId?: string | null
+    height?: number // For AVL
+}
+
+export type TreeEdge = {
+    id: string
+    source: string
+    target: string
+    color?: string
+}
+
 export const useAlgoStore = create<AlgoState>((set) => ({
     // Initial State
     view: 'dashboard',
@@ -83,6 +117,15 @@ export const useAlgoStore = create<AlgoState>((set) => ({
     targetValue: null,
     foundIndex: null,
 
+    // Tree Init
+    treeNodes: [],
+    treeEdges: [],
+    rootId: null,
+
+    // Shared
+    generationId: 0,
+    customDescription: null,
+
     stats: {
         comparisons: 0,
         swaps: 0,
@@ -98,18 +141,23 @@ export const useAlgoStore = create<AlgoState>((set) => ({
     setSpeed: (speed) => set({ speed }),
     selectAlgorithm: (algo) => set({
         currentAlgorithm: algo,
-        view: algo ? 'visualizer' : 'dashboard'
+        view: algo ? 'visualizer' : 'dashboard',
+        customDescription: null // Reset on algo change
     }),
 
     setTargetValue: (val) => set({ targetValue: val }),
     setFoundIndex: (idx) => set({ foundIndex: idx }),
+    setCustomDescription: (desc) => set({ customDescription: desc }),
+
+    setTree: (nodes, edges, rootId) => set({ treeNodes: nodes, treeEdges: edges, rootId }),
+    resetTree: () => set({ treeNodes: [], treeEdges: [], rootId: null }),
 
     generateArray: (size = 10) => {
         const newArray = Array.from({ length: size }, () => ({
             id: generateId(),
             value: Math.floor(Math.random() * 15) + 3 // Height 3 to 18
         }))
-        set({
+        set((state) => ({
             array: newArray,
             comparing: [],
             swapping: [],
@@ -120,8 +168,14 @@ export const useAlgoStore = create<AlgoState>((set) => ({
             currentLine: null,
             logs: [],
             targetValue: null, // Reset Search
-            foundIndex: null
-        })
+            foundIndex: null,
+            // Reset Tree but trigger regeneration via ID
+            treeNodes: [],
+            treeEdges: [],
+            rootId: null,
+            generationId: state.generationId + 1,
+            customDescription: null
+        }))
     },
 
     setArray: (array) => set({ array }),
@@ -144,7 +198,11 @@ export const useAlgoStore = create<AlgoState>((set) => ({
             currentLine: null,
             logs: [],
             targetValue: null,
-            foundIndex: null
+            foundIndex: null,
+            // Tree
+            treeNodes: [],
+            treeEdges: [],
+            rootId: null
         }
     }),
 

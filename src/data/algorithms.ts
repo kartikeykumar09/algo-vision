@@ -251,9 +251,78 @@ export const ALGOS: Category[] = [
         description: 'Hierarchical node-based structures.',
         gradient: 'from-green-500 to-emerald-500',
         algorithms: [
-            { id: 'bst', name: 'Binary Search Tree', description: 'Ordered node placement.', complexity: 'O(log n)', status: 'coming-soon' },
-            { id: 'avl', name: 'AVL Tree', description: 'Self-balancing BST.', complexity: 'O(log n)', status: 'coming-soon' },
-            { id: 'traversals', name: 'Tree Traversals', description: 'BFS and DFS for trees.', complexity: 'O(n)', status: 'coming-soon' },
+            {
+                id: 'bst',
+                name: 'Binary Search Tree',
+                description: 'Ordered node placement.',
+                complexity: 'O(log n)',
+                status: 'ready',
+                learning: {
+                    introduction: "A Binary Search Tree (BST) is a binary tree data structure which has the following properties: The left subtree of a node contains only nodes with keys lesser than the node's key. The right subtree of a node contains only nodes with keys greater than the node's key. The left and right subtree each must also be a binary search tree.",
+                    complexityAnalysis: "Time Complexity: O(log n) for Search, Insert, Delete on average. O(n) in worst case (skewed tree). Space Complexity: O(n).",
+                    codeExplanation: "Insert(val): if root is null, create new node. Else if val < root.val, recurse left. Else recurse right.",
+                    realWorldUses: [
+                        "Implementing multilevel indexing in databases.",
+                        "Dynamic sorting lists.",
+                        "Evaluation of expressions (Expression Tree)."
+                    ],
+                    interviewNotes: {
+                        stability: "N/A",
+                        inPlace: "No",
+                        bestCase: "O(log n) - Balanced Tree.",
+                        worstCase: "O(n) - Degenerate (Linked List) Tree.",
+                        keyTakeaway: "Great for ordered data and range queries. Performance degrades if not balanced (AVL/Red-Black fix this)."
+                    }
+                }
+            },
+            {
+                id: 'avl',
+                name: 'AVL Tree',
+                description: 'Self-balancing BST.',
+                complexity: 'O(log n)',
+                status: 'ready',
+                learning: {
+                    introduction: "AVL tree is a self-balancing Binary Search Tree (BST) where the difference between heights of left and right subtrees cannot be more than one for all nodes. If the property is violated after an operation, rotations are performed to regain balance.",
+                    complexityAnalysis: "Time Complexity: O(log n) for all operations (Search, Insert, Delete). guaranteed. Space Complexity: O(n).",
+                    codeExplanation: "After insert/delete, check Balance Factor (Height(Left) - Height(Right)). If |BF| > 1, perform rotations (LL, RR, LR, RL) to balance.",
+                    realWorldUses: [
+                        "Databases where frequent lookups are required (guaranteed O(log n)).",
+                        "Memory management subsystems.",
+                        "Sets and Dictionaries in standard libraries."
+                    ],
+                    interviewNotes: {
+                        stability: "N/A",
+                        inPlace: "No",
+                        bestCase: "O(log n)",
+                        worstCase: "O(log n) - Strictly balanced.",
+                        keyTakeaway: "First self-balancing BST invented. Guarantees logarithmic bounds but requires overhead of storing height and performing rotations."
+                    }
+                }
+            },
+            {
+                id: 'traversals',
+                name: 'Tree Traversals',
+                description: 'BFS and DFS for trees.',
+                complexity: 'O(n)',
+                status: 'ready',
+                learning: {
+                    introduction: "Tree traversal is the process of visiting each node in the tree structure exactly once. The most common traversals are Inorder (Left-Root-Right), Preorder (Root-Left-Right), and Postorder (Left-Right-Root).",
+                    complexityAnalysis: "Time Complexity: O(n) - We visit every node once. Space Complexity: O(h) - Stack depth where h is height of tree.",
+                    codeExplanation: "Inorder: Traverse Left, Visit Root, Traverse Right. Preorder: Visit Root, Traverse Left, Traverse Right. Postorder: Traverse Left, Traverse Right, Visit Root.",
+                    realWorldUses: [
+                        "Inorder: Get sorted list from BST.",
+                        "Preorder: Copying a tree structure.",
+                        "Postorder: Deleting a tree (delete children before parent)."
+                    ],
+                    interviewNotes: {
+                        stability: "N/A",
+                        inPlace: "No (Stack space)",
+                        bestCase: "O(n)",
+                        worstCase: "O(n)",
+                        keyTakeaway: "Inorder gives sorted data in BST. Preorder is good for structure replication. Postorder is good for cleanup."
+                    }
+                }
+            },
         ]
     },
     {
