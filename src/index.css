@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Background Colors */
+    --background: 220 13% 8%;
+    --foreground: 210 20% 98%;
+
+    /* Card System */
+    --card: 220 13% 12%;
+    --card-foreground: 210 20% 98%;
+    --card-hover: 220 13% 16%;
+
+    /* Interactive Elements */
+    --popover: 220 13% 12%;
+    --popover-foreground: 210 20% 98%;
+
+    /* Brand Colors - Cyan/Teal Primary to match portfolio */
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 13% 8%;
+    --primary-muted: 180 100% 30%;
+
+    /* Secondary System */
+    --secondary: 220 13% 16%;
+    --secondary-foreground: 210 20% 98%;
+
+    /* Muted System */
+    --muted: 220 13% 16%;
+    --muted-foreground: 210 15% 65%;
+
+    /* Accent System - Purple/Pink */
+    --accent: 280 100% 70%;
+    --accent-foreground: 220 13% 8%;
+    --accent-muted: 280 100% 50%;
+
+    /* Status Colors */
+    --success: 120 100% 50%;
+    --warning: 45 100% 60%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* UI Elements */
+    --border: 220 13% 20%;
+    --input: 220 13% 16%;
+    --ring: 180 100% 50%;
+
+    /* Design Tokens */
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(var(--card-hover)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(220 13% 12%));
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px hsla(var(--primary), 0.1);
+    --shadow-md: 0 8px 25px hsla(var(--primary), 0.15);
+    --shadow-lg: 0 25px 50px hsla(var(--primary), 0.25);
+    --shadow-glow: 0 0 20px hsla(var(--primary), 0.3);
+
+    /* Sidebar - keeping if needed */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Default is dark */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
