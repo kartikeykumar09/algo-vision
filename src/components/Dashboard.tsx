@@ -1,4 +1,4 @@
-import { ArrowRight, Lock, Sparkles } from "lucide-react"
+import { ArrowRight, Lock, Sparkles, Github } from "lucide-react"
 import { ALGOS } from "../data/algorithms"
 import { cn } from "@/lib/utils"
 import { Link } from "react-router-dom"
@@ -86,6 +86,23 @@ export const Dashboard = () => {
             </section>
           ))}
         </div>
+
+        {/* Footer */}
+        <footer className="pt-20 pb-8 text-center border-t border-white/5">
+            <p className="text-sm text-muted-foreground mb-4">
+              Built by <a href="https://kartikeykumar.in" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors bg-cyan-400/10 px-1.5 py-0.5 rounded hover:bg-cyan-400/20">Kartikey Kumar</a> · 
+              More tools at <a href="https://kartikeykumar.in/tools" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors hover:underline decoration-cyan-400/50 underline-offset-4">kartikeykumar.in/tools</a>
+            </p>
+            <a 
+              href="https://github.com/kartikeykumar09/algo-vision" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 text-xs font-medium text-muted-foreground hover:text-white transition-all hover:scale-105 active:scale-95"
+            >
+              <Github size={14} />
+              View Source Code
+            </a>
+        </footer>
       </div>
     </div>
   )
