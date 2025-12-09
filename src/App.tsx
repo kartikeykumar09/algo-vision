@@ -1,3 +1,5 @@
+import { LinearSearch } from '@/components/visualizer/searching/LinearSearch'
+import { BinarySearch } from '@/components/visualizer/searching/BinarySearch'
 import { Stage } from '@/components/visualizer/Stage'
 import { BubbleSort } from '@/components/visualizer/sorting/BubbleSort'
 import { QuickSort } from '@/components/visualizer/sorting/QuickSort'
@@ -5,6 +7,8 @@ import { MergeSort } from '@/components/visualizer/sorting/MergeSort'
 import { InsertionSort } from '@/components/visualizer/sorting/InsertionSort'
 import { SelectionSort } from '@/components/visualizer/sorting/SelectionSort'
 import { HeapSort } from '@/components/visualizer/sorting/HeapSort'
+
+
 import { useAlgoStore } from '@/store/useAlgoStore'
 import { Play, Pause, RotateCcw, StepForward, RefreshCw, ChevronLeft, Github, Box, Layers } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -16,7 +20,7 @@ import { ALGOS } from '@/data/algorithms'
 
 // Internal component for handling Tabs
 // This keeps the App logic clean and solves the state management for tabs
-const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine }: { currentAlgorithm: any, isPlaying: boolean, logs: string[], currentLine: number | null }) => {
+const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine, targetValue }: { currentAlgorithm: any, isPlaying: boolean, logs: string[], currentLine: number | null, targetValue: number | null }) => {
     const [activeTab, setActiveTab] = useState<'Overview' | 'Learn' | 'Logs'>('Overview')
 
     return (
@@ -61,6 +65,19 @@ const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine }: { cur
                         <p className="text-sm text-muted-foreground leading-relaxed border-l-2 border-white/5 pl-3">
                             {currentAlgorithm?.description}
                         </p>
+
+                        {/* Problem Statement Widget */}
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500/5 to-blue-500/5 border border-cyan-500/10 mt-4 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-cyan-500/10 to-transparent blur-xl pointer-events-none" />
+                            <div className="text-[10px] text-cyan-400/80 mb-1 uppercase tracking-widest font-bold">Current Goal</div>
+                            <div className="text-sm text-foreground font-medium flex items-center gap-2">
+                                {currentAlgorithm.id.includes('sort') ? (
+                                    <span>Sort array in <span className="text-cyan-400">ascending order</span></span>
+                                ) : (
+                                    <span>Find index of value <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-mono text-xs border border-cyan-500/30 ml-1">{targetValue ?? '?'}</span></span>
+                                )}
+                            </div>
+                        </div>
                         
                         {/* Status Widget */}
                         <div className="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-cyan-500/30 transition-colors mt-4">
@@ -111,6 +128,21 @@ const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine }: { cur
     j = j - 1;
   }
   arr[j + 1] = key;
+}`}
+            {currentAlgorithm.id === 'linear-search' &&
+`for (i = 0; i < n; i++) {
+  if (arr[i] == target) {
+    return i;
+  }
+}
+return -1;`}
+            {currentAlgorithm.id === 'binary-search' &&
+`low = 0, high = n - 1;
+while (low <= high) {
+  mid = (low + high) / 2;
+  if (arr[mid] == target) return mid;
+  if (arr[mid] < target) low = mid + 1;
+  else high = mid - 1;
 }`}
             {currentAlgorithm.id === 'selection-sort' &&
 `for (i = 0; i < n-1; i++) {
@@ -237,7 +269,8 @@ const AlgoVisualizer = () => {
         currentLine,
         logs,
         speed,
-        setSpeed
+        setSpeed,
+        targetValue
     } = useAlgoStore()
 
     // Sync URL with Store
@@ -351,6 +384,7 @@ const AlgoVisualizer = () => {
                  isPlaying={isPlaying}
                  logs={logs}
                  currentLine={currentLine}
+                 targetValue={targetValue}
               />
             </div>
           </aside>
@@ -403,6 +437,8 @@ const AlgoVisualizer = () => {
              </div>
 
              <Stage className="rounded-none border-0 shadow-none">
+                {currentAlgorithm?.id === 'linear-search' && <LinearSearch />}
+                {currentAlgorithm?.id === 'binary-search' && <BinarySearch />}
                 {currentAlgorithm?.id === 'bubble-sort' && <BubbleSort />}
                 {currentAlgorithm?.id === 'quick-sort' && <QuickSort />}
                 {currentAlgorithm?.id === 'merge-sort' && <MergeSort />}

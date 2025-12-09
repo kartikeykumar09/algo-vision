@@ -194,8 +194,54 @@ export const ALGOS: Category[] = [
         description: 'Finding specific elements within data structures.',
         gradient: 'from-blue-500 to-cyan-500',
         algorithms: [
-            { id: 'linear-search', name: 'Linear Search', description: 'Sequential checking.', complexity: 'O(n)', status: 'coming-soon' },
-            { id: 'binary-search', name: 'Binary Search', description: 'Divide and conquer on sorted data.', complexity: 'O(log n)', status: 'coming-soon' },
+            {
+                id: 'linear-search',
+                name: 'Linear Search',
+                description: 'Sequential checking.',
+                complexity: 'O(n)',
+                status: 'ready',
+                learning: {
+                    introduction: "Linear Search is the simplest searching algorithm that searches for an element in a list in sequential order. It starts at one end and goes through each element of the list until the desired element is found, otherwise the search continues till the end of the data set.",
+                    complexityAnalysis: "Time Complexity: O(n) - In the worst case, we check every element. Space Complexity: O(1) - No extra space needed.",
+                    codeExplanation: "Iterate from index 0 to n-1. If arr[i] matches the target value, return i. If the loop completes without finding the target, return -1.",
+                    realWorldUses: [
+                        "Searching in small or unsorted datasets.",
+                        "When specific data structure is not known (works on any list).",
+                        "Debugging verify contents of a collection manually."
+                    ],
+                    interviewNotes: {
+                        stability: "N/A (Searching algorithm)",
+                        inPlace: "Yes",
+                        bestCase: "O(1) - Element found at first position.",
+                        worstCase: "O(n) - Element found at last position or not present.",
+                        keyTakeaway: "Simple but inefficient for large datasets. Doesn't require sorted data."
+                    }
+                }
+            },
+            {
+                id: 'binary-search',
+                name: 'Binary Search',
+                description: 'Divide and conquer on sorted data.',
+                complexity: 'O(log n)',
+                status: 'ready',
+                learning: {
+                    introduction: "Binary Search is a search algorithm that finds the position of a target value within a sorted array. Binary search compares the target value to the middle element of the array. If they are not equal, the half in which the target cannot lie is eliminated and the search continues on the remaining half.",
+                    complexityAnalysis: "Time Complexity: O(log n) - The search space is halved in every step. Space Complexity: O(1) iterative, O(log n) recursive stack.",
+                    codeExplanation: "Set low=0, high=n-1. While low <= high: mid = (low+high)/2. If arr[mid] == target, return mid. If arr[mid] < target, low = mid + 1. Else high = mid - 1.",
+                    realWorldUses: [
+                        "Searching in databases (indexes are sorted/B-Trees).",
+                        "Library implementation of search (e.g., standard library sets/maps).",
+                        "Debugging (Git bisect uses binary search logic to find bug commit)."
+                    ],
+                    interviewNotes: {
+                        stability: "N/A",
+                        inPlace: "Yes",
+                        bestCase: "O(1) - Element found at middle immediately.",
+                        worstCase: "O(log n) - Element not found or at leaf level.",
+                        keyTakeaway: "Lightning fast searching but STRICTLY requires sorted data. 30 steps to find item in 1 billion record array."
+                    }
+                }
+            },
         ]
     },
     {

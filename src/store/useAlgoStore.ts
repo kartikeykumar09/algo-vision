@@ -37,6 +37,12 @@ interface AlgoState {
     // Logs
     logs: string[]
 
+    // Searching State
+    targetValue: number | null
+    foundIndex: number | null
+    setTargetValue: (val: number | null) => void
+    setFoundIndex: (index: number | null) => void
+
     // Actions
     setView: (view: 'dashboard' | 'visualizer') => void
     setViewMode: (mode: '2d' | '3d') => void
@@ -73,6 +79,10 @@ export const useAlgoStore = create<AlgoState>((set) => ({
     isSorted: false,
     speed: 500,
 
+    // Search Init
+    targetValue: null,
+    foundIndex: null,
+
     stats: {
         comparisons: 0,
         swaps: 0,
@@ -85,11 +95,14 @@ export const useAlgoStore = create<AlgoState>((set) => ({
     // Actions
     setView: (view) => set({ view }),
     setViewMode: (mode) => set({ viewMode: mode }),
-    setSpeed: (speed) => set({ speed }), // Added setSpeed
+    setSpeed: (speed) => set({ speed }),
     selectAlgorithm: (algo) => set({
         currentAlgorithm: algo,
-        view: algo ? 'visualizer' : 'dashboard' // Auto switch
+        view: algo ? 'visualizer' : 'dashboard'
     }),
+
+    setTargetValue: (val) => set({ targetValue: val }),
+    setFoundIndex: (idx) => set({ foundIndex: idx }),
 
     generateArray: (size = 10) => {
         const newArray = Array.from({ length: size }, () => ({
@@ -105,7 +118,9 @@ export const useAlgoStore = create<AlgoState>((set) => ({
             isPlaying: false,
             stats: { comparisons: 0, swaps: 0, operations: 0 },
             currentLine: null,
-            logs: []
+            logs: [],
+            targetValue: null, // Reset Search
+            foundIndex: null
         })
     },
 
@@ -127,7 +142,9 @@ export const useAlgoStore = create<AlgoState>((set) => ({
             isPlaying: false,
             stats: { comparisons: 0, swaps: 0, operations: 0 },
             currentLine: null,
-            logs: []
+            logs: [],
+            targetValue: null,
+            foundIndex: null
         }
     }),
 
