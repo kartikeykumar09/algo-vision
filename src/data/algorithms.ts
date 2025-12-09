@@ -332,9 +332,48 @@ export const ALGOS: Category[] = [
         description: 'Nodes and edges modeling relationships.',
         gradient: 'from-purple-500 to-pink-500',
         algorithms: [
-            { id: 'bfs', name: 'Breadth-First Search', description: 'Level-by-level exploration.', complexity: 'O(V+E)', status: 'coming-soon' },
-            { id: 'dfs', name: 'Depth-First Search', description: 'Deep branch exploration.', complexity: 'O(V+E)', status: 'coming-soon' },
-            { id: 'dijkstra', name: 'Dijkstra', description: 'Shortest path finding.', complexity: 'O(E log V)', status: 'coming-soon' },
+            {
+                id: 'bfs',
+                name: 'Breadth-First Search',
+                description: 'Level-by-level exploration.',
+                complexity: 'O(V+E)',
+                status: 'ready',
+                learning: {
+                    introduction: "Breadth-First Search (BFS) is a graph traversal algorithm that explores all the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.",
+                    complexityAnalysis: "Time: O(V + E) where V is vertices and E is edges. Space: O(V) for the queue.",
+                    codeExplanation: "Use a queue. Enqueue start node. While queue not empty, dequeue node, visit it, and enqueue all unvisited neighbors.",
+                    realWorldUses: ["Shortest Path in unweighted graphs", "Peer-to-peer networks", "Social Networking (friends of friends)"],
+                    interviewNotes: { stability: "N/A", inPlace: "No", bestCase: "O(1)", worstCase: "O(V+E)", keyTakeaway: "Best for finding shortest path in unweighted graphs." }
+                }
+            },
+            {
+                id: 'dfs',
+                name: 'Depth-First Search',
+                description: 'Deep branch exploration.',
+                complexity: 'O(V+E)',
+                status: 'ready',
+                learning: {
+                    introduction: "Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node and explores as far as possible along each branch before backtracking.",
+                    complexityAnalysis: "Time: O(V + E). Space: O(V) for recursion stack.",
+                    codeExplanation: "Recursive: Visit node, mark as visited. For each unvisited neighbor, recursively call DFS.",
+                    realWorldUses: ["Topological Sorting", "Solving mazes", "Cycle detection"],
+                    interviewNotes: { stability: "N/A", inPlace: "No", bestCase: "O(1)", worstCase: "O(V+E)", keyTakeaway: "Useful for pathfinding where solution is far from root, or for complete exploration." }
+                }
+            },
+            {
+                id: 'dijkstra',
+                name: 'Dijkstra',
+                description: 'Shortest path finding.',
+                complexity: 'O(E log V)',
+                status: 'ready',
+                learning: {
+                    introduction: "Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph. It works by visiting nodes in the graph starting with the object's starting node.",
+                    complexityAnalysis: "Time: O(E log V) with Priority Queue. Space: O(V).",
+                    codeExplanation: "Init distances to infinity, start to 0. Use Min-Heap. Extract min distance node, relax edges to neighbors. Repeat.",
+                    realWorldUses: ["GPS Navigation", "Network Routing Protocols (OSPF)", "flight connections"],
+                    interviewNotes: { stability: "N/A", inPlace: "No", bestCase: "O(E)", worstCase: "O(E log V)", keyTakeaway: "Standard for shortest path in weighted graphs with non-negative weights." }
+                }
+            },
         ]
     },
     {
@@ -344,9 +383,48 @@ export const ALGOS: Category[] = [
         description: 'Linear collections of connected nodes.',
         gradient: 'from-yellow-500 to-amber-500',
         algorithms: [
-            { id: 'singly', name: 'Singly Linked List', description: 'One-way traversal.', complexity: 'O(1)', status: 'coming-soon' },
-            { id: 'doubly', name: 'Doubly Linked List', description: 'Two-way traversal.', complexity: 'O(1)', status: 'coming-soon' },
-            { id: 'reversal', name: 'List Reversal', description: 'Inverting connections.', complexity: 'O(n)', status: 'coming-soon' },
+            {
+                id: 'singly',
+                name: 'Singly Linked List',
+                description: 'One-way traversal.',
+                complexity: 'O(1)',
+                status: 'ready',
+                learning: {
+                    introduction: "A Singly Linked List is a linear data structure where distinct nodes are connected by a reference (or pointer) to the next node. The last node points to specific 'null' value.",
+                    complexityAnalysis: "Access: O(n), Search: O(n), Insertion: O(1) (at head), Deletion: O(1) (at head).",
+                    codeExplanation: "Node class has 'val' and 'next'. To traverse: curr = head; while(curr) { curr = curr.next }.",
+                    realWorldUses: ["Implementation of stacks/queues", "Adjacency lists for graphs", "Undo functionality (history)"],
+                    interviewNotes: { stability: "N/A", inPlace: "Yes", bestCase: "O(1)", worstCase: "O(n)", keyTakeaway: "Dynamic size, efficient insertion/deletion at start, but slow access." }
+                }
+            },
+            {
+                id: 'doubly',
+                name: 'Doubly Linked List',
+                description: 'Two-way traversal.',
+                complexity: 'O(1)',
+                status: 'ready',
+                learning: {
+                    introduction: "A Doubly Linked List node contains a pointer to both the next and the previous node, allowing traversal in specific both directions.",
+                    complexityAnalysis: "Access: O(n), Search: O(n), Insertion/Deletion: O(1) (given the node).",
+                    codeExplanation: "Node has 'val', 'next', 'prev'. Update both pointers when inserting/deleting.",
+                    realWorldUses: ["Browser cache (LRU)", "Music playlist (next/prev)", "Text editor navigation"],
+                    interviewNotes: { stability: "N/A", inPlace: "Yes", bestCase: "O(1)", worstCase: "O(n)", keyTakeaway: "More interaction flexibility than Singly LL at cost of extra memory for prev pointer." }
+                }
+            },
+            {
+                id: 'reversal',
+                name: 'List Reversal',
+                description: 'Inverting connections.',
+                complexity: 'O(n)',
+                status: 'ready',
+                learning: {
+                    introduction: "Reversing a Linked List involves changing the direction of pointers so that the last node becomes the head and the first node becomes the last.",
+                    complexityAnalysis: "Time: O(n). Space: O(1) iterative, O(n) recursive.",
+                    codeExplanation: "Iterative: prev = null, curr = head. Loop: temp = curr.next; curr.next = prev; prev = curr; curr = temp. Return prev.",
+                    realWorldUses: ["Reversing data streams", "Undo operations", "Base for palindrome check"],
+                    interviewNotes: { stability: "N/A", inPlace: "Yes", bestCase: "O(n)", worstCase: "O(n)", keyTakeaway: "Classic interview problem. Master the 3-pointer iterative approach." }
+                }
+            },
         ]
     },
     {
@@ -356,8 +434,34 @@ export const ALGOS: Category[] = [
         description: 'Breaking problems into subproblems.',
         gradient: 'from-indigo-500 to-violet-500',
         algorithms: [
-            { id: 'fibonacci', name: 'Fibonacci', description: 'Memoization vs Tabulation.', complexity: 'O(n)', status: 'coming-soon' },
-            { id: 'knapsack', name: '0/1 Knapsack', description: 'Optimization problem.', complexity: 'O(nW)', status: 'coming-soon' },
+            {
+                id: 'fibonacci',
+                name: 'Fibonacci',
+                description: 'Memoization vs Tabulation.',
+                complexity: 'O(n)',
+                status: 'ready',
+                learning: {
+                    introduction: "The Fibonacci sequence is a set of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. Dynamic Programming optimizes this by storing results of subproblems.",
+                    complexityAnalysis: "Time: O(n) - We calculate each number once. Space: O(n) for the table (can be optimized to O(1) space).",
+                    codeExplanation: "dp[0] = 0; dp[1] = 1;\nfor (i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+                    realWorldUses: ["Financial modeling", "Search algorithms (Fibonacci search)", "Nature patterns (population growth)"],
+                    interviewNotes: { stability: "N/A", inPlace: "N/A", bestCase: "O(n)", worstCase: "O(n)", keyTakeaway: "Classic example of moving from Recursion (O(2^n)) to DP (O(n))." }
+                }
+            },
+            {
+                id: 'knapsack',
+                name: '0/1 Knapsack',
+                description: 'Optimization problem.',
+                complexity: 'O(nW)',
+                status: 'ready',
+                learning: {
+                    introduction: "Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.",
+                    complexityAnalysis: "Time: O(n*W) where n is number of items and W is capacity. Space: O(n*W) 2D table.",
+                    codeExplanation: "if (wt[i] <= w) {\n  dp[i][w] = max(val[i] + dp[i-1][w-wt], dp[i-1][w]);\n} else {\n  dp[i][w] = dp[i-1][w];\n}",
+                    realWorldUses: ["Resource allocation", "Budget management", "Cargo loading"],
+                    interviewNotes: { stability: "N/A", inPlace: "N/A", bestCase: "O(nW)", worstCase: "O(nW)", keyTakeaway: "Understand the recurrence relation: Include item vs Exclude item." }
+                }
+            },
         ]
     }
 ]

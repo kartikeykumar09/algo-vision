@@ -10,6 +10,13 @@ import { HeapSort } from '@/components/visualizer/sorting/HeapSort'
 import { BST } from '@/components/visualizer/trees/BST'
 import { AVLTree } from '@/components/visualizer/trees/AVLTree'
 import { TreeTraversals } from '@/components/visualizer/trees/TreeTraversals'
+import { BFS } from '@/components/visualizer/graphs/BFS'
+import { DFS } from '@/components/visualizer/graphs/DFS'
+import { Dijkstra } from '@/components/visualizer/graphs/Dijkstra'
+import { SinglyLinkedList } from '@/components/visualizer/linkedlist/SinglyLinkedList'
+import { ListReversal } from '@/components/visualizer/linkedlist/ListReversal'
+import { Fibonacci } from '@/components/visualizer/dp/Fibonacci'
+import { Knapsack } from '@/components/visualizer/dp/Knapsack'
 
 
 import { useAlgoStore } from '@/store/useAlgoStore'
@@ -82,10 +89,16 @@ const TabbedSidebar = ({ currentAlgorithm, isPlaying, logs, currentLine, targetV
                                     <span>Find index of value <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-mono text-xs border border-cyan-500/30 ml-1">{targetValue ?? '?'}</span></span>
                                 ) : currentAlgorithm.id === 'traversals' ? (
                                     <span>Traverse tree nodes <span className="text-cyan-400">In-Order</span></span>
+                                ) : currentAlgorithm.id === 'fibonacci' ? (
+                                    <span>Compute <span className="text-cyan-400">Fibonacci(10)</span></span>
+                                ) : currentAlgorithm.id === 'knapsack' ? (
+                                    <span>Maximize Value (Capacity <span className="text-cyan-400">6</span>)</span>
                                 ) : (
                                     <span>Search or Insert <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-mono text-xs border border-cyan-500/30 ml-1">{targetValue ?? '?'}</span></span>
                                 )}
                             </div>
+                            
+
                         </div>
                         
                         {/* Status Widget */}
@@ -230,12 +243,102 @@ postOrder(node) {
   postOrder(node.right);
   visit(node);
 }`}
-            {currentAlgorithm.id === 'heap-sort' &&
-`heapSort(arr) {
-  buildMaxHeap(arr);
-  for (i = n-1; i > 0; i--) {
-    swap(arr[0], arr[i]);
-    heapify(arr, 0, i);
+            {currentAlgorithm.id === 'bfs' &&
+`BFS(start) {
+  queue = [start];
+  visited = set();
+  visited.add(start);
+  
+  while (queue not empty) {
+    node = queue.dequeue();
+    visit(node);
+    
+    for (neighbor in node.neighbors) {
+      if (neighbor not in visited) {
+        visited.add(neighbor);
+        queue.enqueue(neighbor);
+      }
+    }
+  }
+}`}
+            {currentAlgorithm.id === 'dfs' &&
+`DFS(node, visited) {
+  if (node in visited) return;
+  
+  visited.add(node);
+  visit(node);
+  
+  for (neighbor in node.neighbors) {
+    DFS(neighbor, visited);
+  }
+}`}
+            {currentAlgorithm.id === 'dijkstra' &&
+`dijkstra(graph, start) {
+  dist[start] = 0;
+  for (all other nodes v)
+    dist[v] = infinity;
+  
+  pq = PriorityQueue();
+  pq.add(start, 0);
+  
+  while (pq not empty) {
+    u = pq.extractMin();
+    
+    for (neighbor v of u) {
+      alt = dist[u] + weight(u, v);
+      if (alt < dist[v]) {
+        dist[v] = alt;
+        prev[v] = u;
+        pq.add(v, alt);
+      }
+    }
+  }
+}`}
+            {currentAlgorithm.id === 'singly' &&
+`class Node {
+  val; next;
+}
+// Traversal
+curr = head;
+while (curr != null) {
+  visit(curr.val);
+  curr = curr.next;
+}`}
+            {currentAlgorithm.id === 'doubly' &&
+`class Node {
+  val; prev; next;
+}
+// Delete node
+if (node.prev) node.prev.next = node.next;
+if (node.next) node.next.prev = node.prev;`}
+            {currentAlgorithm.id === 'reversal' &&
+`reverse(head) {
+  prev = null;
+  curr = head;
+  while (curr != null) {
+    next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+  return prev;
+}`}
+            {currentAlgorithm.id === 'fibonacci' &&
+`// Tabulation
+dp[0] = 0;
+dp[1] = 1;
+
+for (i = 2; i <= n; i++) {
+  dp[i] = dp[i-1] + dp[i-2];
+}`}
+            {currentAlgorithm.id === 'knapsack' &&
+`for (i = 0; i <= n; i++) {
+  for (w = 0; w <= W; w++) {
+    if (i==0 || w==0) dp[i][w] = 0;
+    else if (wt[i-1] <= w)
+      dp[i][w] = max(val[i-1] + dp[i-1][w-wt], dp[i-1][w]);
+    else
+      dp[i][w] = dp[i-1][w];
   }
 }`}
         </pre>
@@ -528,6 +631,14 @@ const AlgoVisualizer = () => {
                 {currentAlgorithm?.id === 'bst' && <BST />}
                 {currentAlgorithm?.id === 'avl' && <AVLTree />}
                 {currentAlgorithm?.id === 'traversals' && <TreeTraversals />}
+                {currentAlgorithm?.id === 'bfs' && <BFS />}
+                {currentAlgorithm?.id === 'dfs' && <DFS />}
+                {currentAlgorithm?.id === 'dijkstra' && <Dijkstra />}
+                {currentAlgorithm?.id === 'singly' && <SinglyLinkedList />}
+                {currentAlgorithm?.id === 'doubly' && <SinglyLinkedList />}
+                {currentAlgorithm?.id === 'reversal' && <ListReversal />}
+                {currentAlgorithm?.id === 'fibonacci' && <Fibonacci />}
+                {currentAlgorithm?.id === 'knapsack' && <Knapsack />}
              </Stage>
           </main>
       </div>

@@ -97,6 +97,7 @@ export type TreeEdge = {
     source: string
     target: string
     color?: string
+    weight?: number
 }
 
 export const useAlgoStore = create<AlgoState>((set) => ({

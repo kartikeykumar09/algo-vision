@@ -1,9 +1,9 @@
 import { Text, Sphere, Line } from '@react-three/drei'
 import type { TreeNode, TreeEdge } from '@/store/useAlgoStore'
 
-export const TreeComponent = ({ nodes, edges, position = [0, 2, 0] }: { nodes: TreeNode[], edges: TreeEdge[], position?: [number, number, number] }) => {
+export const GraphComponent = ({ nodes, edges, position = [0, 0, 0] }: { nodes: TreeNode[], edges: TreeEdge[], position?: [number, number, number] }) => {
     return (
-        <group position={position}> {/* Shift up so root is visible */}
+        <group position={position}>
              {/* Render Edges */}
              {edges.map(edge => {
                 const source = nodes.find(n => n.id === edge.source)
@@ -22,13 +22,13 @@ export const TreeComponent = ({ nodes, edges, position = [0, 2, 0] }: { nodes: T
                                 [target.x, target.y, target.z]
                             ]}
                             color={edge.color || '#475569'}
-                            lineWidth={2}
+                            lineWidth={3}
                         />
                         {edge.weight !== undefined && (
                             <Text
-                                position={[midX, midY + 0.3, midZ]} // Float slightly above
+                                position={[midX, midY + 0.3, midZ]}
                                 fontSize={0.25}
-                                color="#fdba74" // Orange-ish
+                                color="#fdba74"
                                 anchorX="center"
                                 anchorY="middle"
                                 outlineWidth={0.02}
@@ -44,12 +44,12 @@ export const TreeComponent = ({ nodes, edges, position = [0, 2, 0] }: { nodes: T
              {/* Render Nodes */}
              {nodes.map(node => (
                  <group key={node.id} position={[node.x, node.y, node.z]}>
-                    <Sphere args={[0.4, 32, 32]}>
+                    <Sphere args={[0.35, 32, 32]}>
                         <meshStandardMaterial color={node.color || '#06b6d4'} roughness={0.3} metalness={0.8} />
                     </Sphere>
                     <Text
-                        position={[0, 0, 0.45]}
-                        fontSize={0.3}
+                        position={[0, 0, 0.4]}
+                        fontSize={0.28}
                         color="white"
                         anchorX="center"
                         anchorY="middle"
